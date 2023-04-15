@@ -1203,6 +1203,10 @@ footer .footer-copyright p {
 
 /* servicios-productos.html */
 
+.card-width{
+    width: 25vw;
+}
+
 .venta-servicios-productos {
     width: 100%;
     display: flex;
@@ -1280,3 +1284,4 @@ footer .footer-copyright p {
 .columnas-tabla {
     height: 30px;
 }
+
