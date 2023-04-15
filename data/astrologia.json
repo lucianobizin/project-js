@@ -1,0 +1,50 @@
+[
+    {
+        "nombre": "Carta natal",
+        "precio": 25,
+        "entregable": "Carta + Documento PDF con especificaciones técnicas",
+        "diasParaEntrega": 14,
+        "imagen": "cartanatal.jpg",
+        "id": "1.1"
+    },
+    {
+        "nombre": "Revolucón solar",
+        "precio": 20,
+        "entregable": "Diagrama y Documento PDF con especificaciones técnicas",
+        "diasParaEntrega": 7,
+        "imagen": "revolucionsolar.jpg",
+        "id": "1.2"
+    },
+    {
+        "nombre": "Tránsitos",
+        "precio": 18,
+        "entregable": "Documento PDF con análisis de influencias",
+        "diasParaEntrega": 7,
+        "imagen": "transitos.jpg",
+        "id": "1.3"
+    },
+    {
+        "nombre": "Progresiones",
+        "precio": 18,
+        "entregable": "Documento PDF con riesgos y oportunidades",
+        "diasParaEntrega": 7,
+        "imagen": "progresiones.jpg",
+        "id": "1.4"
+    },
+    {
+        "nombre": "Sinastrías",
+        "precio": 20,
+        "entregable": "Documento PDF explicativo y videos",
+        "diasParaEntrega": 7,
+        "imagen": "sinastria.jpg",
+        "id": "1.5"
+    },
+    {
+        "nombre": "Análisis Completo + MBTI",
+        "precio": 50,
+        "entregable": "Documento PDF explicativo y videos",
+        "diasParaEntrega": 21,
+        "imagen": "mbti.jpg",
+        "id": "1.6"
+    }
+]
