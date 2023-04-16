@@ -1,3 +1,5 @@
+import { cart } from "./domcarthandler.js";
+
 //----------------------------------------
 /* 
 This is the file that manipulates the DOM 
@@ -6,7 +8,6 @@ in what respects to the cards of all services and products
 // ---------------------------------------
 
 // 0) Generating the cart
-const cart = [];
 
 // 1) Recovering all divs thar will be modified manipulating the DOM, aiming to add all services and products in a dynamic way
 let astrologicalCards = document.getElementById('astrological-cards');
@@ -35,9 +36,11 @@ const fetchServProdAll = async () => {
 
 // 3.1) Getting all astrological services (async, await)
 
-const astrology = [];
+
 
 const renderAstro = async () => {
+
+    let astrology = [];
 
     // Recovering all products so as to filter by the pair => "category": "Astrology"
     let products = await fetchServProdAll()
@@ -67,6 +70,7 @@ const renderAstro = async () => {
             // Que lo meta en un array de astrología
 
             astrology.push(prod);
+
         }
 
         // // Applying functionality to the button "Buy"
@@ -128,13 +132,16 @@ const renderAstro = async () => {
 
     })
 
+    return astrology
+
 }
 
 // 3.2) Getting all Tarot services (async, await)
-const tarot = [];
+
 
 const renderTarot = async () => {
 
+    const tarot = [];
     // Recovering all products so as to filter by the pair => "category": "Tarot"
     let products = await fetchServProdAll();
     products.forEach((prod) => {
@@ -305,71 +312,71 @@ const renderProducts = async () => {
 
 // Executing the async-await functions that modify the DOM with respect to the service and product cards
 
-renderAstro().then(() => {
-    // Applying functionality to the button "Buy"
+// renderAstro().then((astrology) => {
+//     // Applying functionality to the button "Buy"
 
-    for (const prod of astrology) {
+//     for (const prod of astrology) {
 
-        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
-        btnComprar.addEventListener('click', () => {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger margin-right-cancel-button'
-                },
-                buttonsStyling: false
-            })
+//         let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+//         btnComprar.addEventListener('click', () => {
+//             const swalWithBootstrapButtons = Swal.mixin({
+//                 customClass: {
+//                     confirmButton: 'btn btn-success',
+//                     cancelButton: 'btn btn-danger margin-right-cancel-button'
+//                 },
+//                 buttonsStyling: false
+//             })
 
-            swalWithBootstrapButtons.fire({
-                title: '¿Estás segura/o de comprar este producto?',
-                text: "Cualquier duda podés quitarlo del carrito",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, estoy segura/o!',
-                cancelButtonText: 'Cancelar la selección!',
-                reverseButtons: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swalWithBootstrapButtons.fire(
-                        'Se ha sumado el producto al carrito!'
-                    )
+//             swalWithBootstrapButtons.fire({
+//                 title: '¿Estás segura/o de comprar este producto?',
+//                 text: "Cualquier duda podés quitarlo del carrito",
+//                 icon: 'warning',
+//                 showCancelButton: true,
+//                 confirmButtonText: 'Sí, estoy segura/o!',
+//                 cancelButtonText: 'Cancelar la selección!',
+//                 reverseButtons: true,
+//             }).then((result) => {
+//                 if (result.isConfirmed) {
+//                     swalWithBootstrapButtons.fire(
+//                         'Se ha sumado el producto al carrito!'
+//                     )
 
-                    cart.push(prod);
-                    // console.log(sumar(carrito));
+//                     cart.push(prod);
+//                     // console.log(sumar(carrito));
 
-                    const enJSON = JSON.stringify(prod);
-                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+//                     const enJSON = JSON.stringify(prod);
+//                     localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
 
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Se ha cancelado la adquisición'
-                    )
-                }
-            })
-        })
+//                 } else if (
+//                     /* Read more about handling dismissals below */
+//                     result.dismiss === Swal.DismissReason.cancel
+//                 ) {
+//                     swalWithBootstrapButtons.fire(
+//                         'Se ha cancelado la adquisición'
+//                     )
+//                 }
+//             })
+//         })
 
-        // Applying functionality to the button "More info"
-        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
-        btnInfo.addEventListener('click', () => {
-            Swal.fire({
-                title: 'Custom animation with Animate.css',
-                text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            })
-        })
+//         // Applying functionality to the button "More info"
+//         let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+//         btnInfo.addEventListener('click', () => {
+//             Swal.fire({
+//                 title: 'Custom animation with Animate.css',
+//                 text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+//                 showClass: {
+//                     popup: 'animate__animated animate__fadeInDown'
+//                 },
+//                 hideClass: {
+//                     popup: 'animate__animated animate__fadeOutUp'
+//                 }
+//             })
+//         })
 
-    }
-}
-)
-.catch((e) => console.log(e));
+//     }
+// }
+// )
+// .catch((e) => console.log(e));
 
 renderTarot().then(() => {
 
@@ -437,62 +444,7 @@ renderTarot().then(() => {
 renderDicesAndRunes().then(() => {
 
     for (const prod of DiceRunes) {
-        // Applying functionality to the button "Buy"
-        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
-        btnComprar.addEventListener('click', () => {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger margin-right-cancel-button'
-                },
-                buttonsStyling: false
-            })
-
-            swalWithBootstrapButtons.fire({
-                title: '¿Estás segura/o de comprar este producto?',
-                text: "Cualquier duda podés quitarlo del carrito",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, estoy segura/o!',
-                cancelButtonText: 'Cancelar la selección!',
-                reverseButtons: true,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    swalWithBootstrapButtons.fire(
-                        'Se ha sumado el producto al carrito!'
-                    )
-
-                    cart.push(prod);
-                    // console.log(sumar(carrito));
-
-                    const enJSON = JSON.stringify(prod);
-                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
-
-                } else if (
-                    /* Read more about handling dismissals below */
-                    result.dismiss === Swal.DismissReason.cancel
-                ) {
-                    swalWithBootstrapButtons.fire(
-                        'Se ha cancelado la adquisición'
-                    )
-                }
-            })
-        })
-
-        // Applying functionality to the button "More info"
-        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
-        btnInfo.addEventListener('click', () => {
-            Swal.fire({
-                title: 'Custom animation with Animate.css',
-                text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            })
-        })
+        
     }
 })
     .catch((e) => console.log(e))
