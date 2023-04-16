@@ -5,14 +5,16 @@ in what respects to the cards of all services and products
 */
 // ---------------------------------------
 
+// 0) Generating the cart
+const cart = [];
 
 // 1) Recovering all divs thar will be modified manipulating the DOM, aiming to add all services and products in a dynamic way
-let astrologicalCards = document.querySelector('#astrological-cards');
-let tarotCards = document.querySelector('#tarot-cards');
-let diceAndRunesCards = document.querySelector('#diceandrunes-cards');
-let workshopCards = document.querySelector('#workshop-cards');
-let eventCards = document.querySelector('#event-cards');
-let productCards = document.querySelector('#product-cards');
+let astrologicalCards = document.getElementById('astrological-cards');
+let tarotCards = document.getElementById('tarot-cards');
+let diceAndRunesCards = document.getElementById('diceandrunes-cards');
+let workshopCards = document.getElementById('workshop-cards');
+let eventCards = document.getElementById('event-cards');
+let productCards = document.getElementById('product-cards');
 
 // 2) Returning all services and products from the API (fetch, async, await) which contains the data of all services and products
 
@@ -33,10 +35,12 @@ const fetchServProdAll = async () => {
 
 // 3.1) Getting all astrological services (async, await)
 
+const astrology = [];
+
 const renderAstro = async () => {
 
     // Recovering all products so as to filter by the pair => "category": "Astrology"
-    let products = await fetchServProdAll();
+    let products = await fetchServProdAll()
     products.forEach((prod) => {
 
         // Destructuring objects by some of their variables
@@ -60,13 +64,74 @@ const renderAstro = async () => {
                 </div>`;
             astrologicalCards.appendChild(div);
 
+            // Que lo meta en un array de astrología
+
+            astrology.push(prod);
         }
+
+        // // Applying functionality to the button "Buy"
+        // let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        // btnComprar.addEventListener('click', () => {
+        //     const swalWithBootstrapButtons = Swal.mixin({
+        //         customClass: {
+        //             confirmButton: 'btn btn-success',
+        //             cancelButton: 'btn btn-danger margin-right-cancel-button'
+        //         },
+        //         buttonsStyling: false
+        //     })
+
+        //     swalWithBootstrapButtons.fire({
+        //         title: '¿Estás segura/o de comprar este producto?',
+        //         text: "Cualquier duda podés quitarlo del carrito",
+        //         icon: 'warning',
+        //         showCancelButton: true,
+        //         confirmButtonText: 'Sí, estoy segura/o!',
+        //         cancelButtonText: 'Cancelar la selección!',
+        //         reverseButtons: true,
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Se ha sumado el producto al carrito!'
+        //             )
+
+        //             cart.push(prod);
+        //             // console.log(sumar(carrito));
+
+        //             const enJSON = JSON.stringify(prod);
+        //             localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+        //         } else if (
+        //             /* Read more about handling dismissals below */
+        //             result.dismiss === Swal.DismissReason.cancel
+        //         ) {
+        //             swalWithBootstrapButtons.fire(
+        //                 'Se ha cancelado la adquisición'
+        //             )
+        //         }
+        //     })
+        // })
+
+        // // Applying functionality to the button "More info"
+        // let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        // btnInfo.addEventListener('click', () => {
+        //     Swal.fire({
+        //         title: 'Custom animation with Animate.css',
+        //         text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+        //         showClass: {
+        //             popup: 'animate__animated animate__fadeInDown'
+        //         },
+        //         hideClass: {
+        //             popup: 'animate__animated animate__fadeOutUp'
+        //         }
+        //     })
+        // })
 
     })
 
 }
 
 // 3.2) Getting all Tarot services (async, await)
+const tarot = [];
 
 const renderTarot = async () => {
 
@@ -92,7 +157,8 @@ const renderTarot = async () => {
                         <a href='https://calendly.com/' class='btn btn-primary tamaño-boton' id='btn-agenda-${prod.name.toLowerCase()}'>Availability</a>
                     </div>
                 </div>`;
-                tarotCards.appendChild(div);
+            tarotCards.appendChild(div);
+            tarot.push(prod);
 
         }
 
@@ -100,8 +166,8 @@ const renderTarot = async () => {
 
 }
 
-// // 3.1) Getting all dice and runes services (async, await)
-
+// 3.3) Getting all dice and runes services (async, await)
+const DiceRunes = [];
 const renderDicesAndRunes = async () => {
 
     // Recovering all products so as to filter by the pair => "category": "DiceAndRunes"
@@ -126,8 +192,8 @@ const renderDicesAndRunes = async () => {
                         <a href='https://calendly.com/' class='btn btn-primary tamaño-boton' id='btn-agenda-${prod.name.toLowerCase()}'>Availability</a>
                     </div>
                 </div>`;
-                diceAndRunesCards.appendChild(div);
-
+            diceAndRunesCards.appendChild(div);
+            DiceRunes.push(prod);
         }
 
     })
@@ -135,14 +201,14 @@ const renderDicesAndRunes = async () => {
 }
 
 // 3.4) Getting all workshops services (async, await)
-
+const workshops = [];
 const renderWorkshops = async () => {
 
     // Recovering all products so as to filter by the pair => "category": "Workshops"
     let products = await fetchServProdAll();
     products.forEach((prod) => {
 
-        const { id, name, price, deliverables, deliveryTerm, image, deliverableZone, category, language } = prod;
+        const { id, name, price, deliverables, duration, image, category, language } = prod;
 
         if (prod.category === 'Workshops') {
 
@@ -159,7 +225,8 @@ const renderWorkshops = async () => {
                         <a href='#' class='btn btn-primary tamaño-boton' id='btn-info-${prod.name.toLowerCase()}'>More info</a>
                     </div>
                 </div>`;
-                workshopCards.appendChild(div);
+            workshopCards.appendChild(div);
+            workshops.push();
 
         }
 
@@ -168,14 +235,14 @@ const renderWorkshops = async () => {
 }
 
 // 3.5) Getting all events (async, await)
-
+const events = [];
 const renderEvents = async () => {
 
     // Recovering all products so as to filter by the pair => "category": "Event"
     let products = await fetchServProdAll();
     products.forEach((prod) => {
 
-        const { id, name, price, deliverables, deliveryTerm, image, date, time, ticketsAvailable, category, language } = prod;
+        const { id, name, price, image, date, time, ticketsAvailable, category, language } = prod;
 
         if (prod.category === 'Event') {
 
@@ -190,10 +257,10 @@ const renderEvents = async () => {
                         <p class='card-text'>Euros ${prod.price},00</p>
                         <a href='#' class='btn btn-primary tamaño-boton' id='btn-comprar-${prod.name.toLowerCase()}'>Buy</a>
                         <a href='#' class='btn btn-primary tamaño-boton' id='btn-info-${prod.name.toLowerCase()}'>More info</a>
-                        <a href='https://calendly.com/' class='btn btn-primary tamaño-boton' id='btn-nextevent-${prod.name.toLowerCase()}'>Next event</a>
                     </div>
                 </div>`;
-                eventCards.appendChild(div);
+            eventCards.appendChild(div);
+            events.push(prod);
 
         }
 
@@ -202,14 +269,14 @@ const renderEvents = async () => {
 }
 
 // 3.6) Getting all products (async, await)
-
+const productsArray = [];
 const renderProducts = async () => {
 
     // Recovering all products so as to filter by the pair => "category": "Products"
     let products = await fetchServProdAll();
     products.forEach((prod) => {
 
-        const { id, name, price, deliverables, deliveryTerm, image, deliverableZone, stock, category, language } = prod;
+        const { id, name, price, deliveryTerm, image, deliverableZone, stock, category, language } = prod;
 
         if (prod.category === 'Products') {
 
@@ -227,7 +294,8 @@ const renderProducts = async () => {
                         <a href='#' class='btn btn-primary tamaño-boton' id='btn-stock-${prod.name.toLowerCase()}'>Stock</a>
                     </div>
                 </div>`;
-                productCards.appendChild(div);
+            productCards.appendChild(div);
+            productsArray.push(prod)
 
         }
 
@@ -236,9 +304,385 @@ const renderProducts = async () => {
 }
 
 // Executing the async-await functions that modify the DOM with respect to the service and product cards
-renderAstro();
-renderTarot();
-renderDicesAndRunes();
-renderWorkshops();
-renderEvents();
-renderProducts();
+
+renderAstro().then(() => {
+    // Applying functionality to the button "Buy"
+
+    for (const prod of astrology) {
+
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    cart.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+
+    }
+}
+)
+.catch((e) => console.log(e));
+
+renderTarot().then(() => {
+
+    for (const prod of tarot) {
+        // Applying functionality to the button "Buy"
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    cart.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+    }
+})
+    .catch((e) => console.log(e))
+
+renderDicesAndRunes().then(() => {
+
+    for (const prod of DiceRunes) {
+        // Applying functionality to the button "Buy"
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    cart.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+    }
+})
+    .catch((e) => console.log(e))
+
+renderWorkshops().then(() => {
+
+    for (const prod of workshops) {
+        // Applying functionality to the button "Buy"
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    carrito.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Name: ${prod.name}, Price: ${prod.price}, Duration: ${prod.duration} hours, language: ${prod.language}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+    }
+})
+    .catch((e) => console.log(e));
+
+
+renderEvents().then(() => {
+
+    for (const prod of events) {
+        // Applying functionality to the button "Buy"
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    cart.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Name: ${prod.name}, Price: ${prod.price}, Date: ${prod.date}, Starting Time: ${prod.time}hs, Tickets Available: ${ticketsAvailable}, Language: ${prod.language}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+    }
+})
+    .catch((e) => console.log(e));
+
+renderProducts().then(() => {
+
+    for (const prod of productsArray) {
+        // Applying functionality to the button "Buy"
+        let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
+        btnComprar.addEventListener('click', () => {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger margin-right-cancel-button'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás segura/o de comprar este producto?',
+                text: "Cualquier duda podés quitarlo del carrito",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, estoy segura/o!',
+                cancelButtonText: 'Cancelar la selección!',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha sumado el producto al carrito!'
+                    )
+
+                    cart.push(prod);
+                    // console.log(sumar(carrito));
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Se ha cancelado la adquisición'
+                    )
+                }
+            })
+        })
+
+        // Applying functionality to the button "More info"
+        let btnInfo = document.getElementById(`btn-info-${prod.name.toLowerCase()}`)
+        btnInfo.addEventListener('click', () => {
+            Swal.fire({
+                title: 'Custom animation with Animate.css',
+                text: `ID: ${prod.id}, Name: ${prod.name}, Price: ${prod.price}, Delivarable Term: ${prod.deliveryTerm}, Delivarable Zone: ${prod.deliverableZone}, Available stock: ${prod.stock}, Language: ${prod.language}`,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            })
+        })
+    }
+})
+.catch ((e) => console.log (e));
