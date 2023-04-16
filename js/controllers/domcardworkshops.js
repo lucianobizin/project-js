@@ -41,14 +41,14 @@ const renderWorkshops = async () => {
 }
 
 const workshopsArray = await renderWorkshops();
-console.log(workshopsArray)
+// console.log(workshopsArray)
 
 for (const prod of workshopsArray) {
 
     // Applying functionality to the button "Buy"
     let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase().replace(" ", "-")}`)
     
-    console.log (btnComprar)
+    // console.log (btnComprar)
 
     btnComprar.addEventListener('click', () => {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -72,8 +72,15 @@ for (const prod of workshopsArray) {
                 swalWithBootstrapButtons.fire(
                     'Se ha sumado el producto al carrito!'
                 )
+                
+                const cartProductSearch = cart.find ((prodCart) => prodCart.id === prod.id)
+                if (cartProductSearch){
+                    prod.quantity++
+                } else {
+                    cart.push(prod);
+                    prod.quantity = 1;
+                }
 
-                cart.push(prod);
                 // console.log(sumar(carrito));
 
                 const enJSON = JSON.stringify(prod);

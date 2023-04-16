@@ -68,8 +68,13 @@ for (const prod of tarotArray) {
                     'Se ha sumado el producto al carrito!'
                 )
 
-                cart.push(prod);
-                // console.log(sumar(carrito));
+                const cartProductSearch = cart.find ((prodCart) => prodCart.id === prod.id)
+                if (cartProductSearch){
+                    prod.quantity++
+                } else {
+                    cart.push(prod);
+                    prod.quantity = 1;
+                }
 
                 const enJSON = JSON.stringify(prod);
                 localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
