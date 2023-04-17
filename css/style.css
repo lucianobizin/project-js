@@ -1293,6 +1293,8 @@ footer .footer-copyright p {
     border: none;
     margin-left: 25px;
     border-radius: 10px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .payment-btn:hover {
