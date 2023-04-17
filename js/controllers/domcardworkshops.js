@@ -60,17 +60,17 @@ for (const prod of workshopsArray) {
         })
 
         swalWithBootstrapButtons.fire({
-            title: '¿Estás segura/o de comprar este producto?',
-            text: "Cualquier duda podés quitarlo del carrito",
+            title: `Do you want to buy ${prod.name}?`,
+            text: "Please, let me know should you need some help with that",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sí, estoy segura/o!',
-            cancelButtonText: 'Cancelar la selección!',
+            confirmButtonText: 'Yes, I do!',
+            cancelButtonText: 'Cancell!',
             reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 swalWithBootstrapButtons.fire(
-                    'Se ha sumado el producto al carrito!'
+                    `${prod.name} has been added to your chart`
                 )
                 
                 const cartProductSearch = cart.find ((prodCart) => prodCart.id === prod.id)
@@ -91,7 +91,7 @@ for (const prod of workshopsArray) {
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
-                    'Se ha cancelado la adquisición'
+                    'Your acquisition has been cancelled'
                 )
             }
         })

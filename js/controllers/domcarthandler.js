@@ -22,7 +22,7 @@ if (saveCartLocalStorage) {
 
 // Recovering cart info from LocalStorage and displaying that on cart.html
 
-// Tabla de la página carrito.html
+// Table of cart.html
 
 const cartArray = JSON.parse(localStorage.getItem('Cart'));
 console.log(cartArray)
@@ -33,33 +33,36 @@ let cartTotal = document.getElementById('table-cart-total');
 let total = 0;
 
 if (cartArray) {
-    for (const elemento of cartArray) {
+    for (const element of cartArray) {
 
         let trcolumna = document.createElement('tr');
         trcolumna.innerHTML = `<tr>
-    <td>${elemento.name}</td>
-    <td>${elemento.price} Euros</td>
+    <td>${element.name}</td>
+    <td>${element.quantity}</td>
+    <td>${element.price * element.quantity} Euros</td>
     </tr>`;
         if (cartRows) {
             cartRows.appendChild(trcolumna);
         }
 
 
-        total = total + elemento.price;
+        total = total + element.price;
     }
 
     console.log(total)
 }
 
 
-let trColumnaTotal = document.createElement('tr');
-trColumnaTotal.innerHTML = `<tr>
+let trColumnTotal = document.createElement('tr');
+trColumnTotal.innerHTML = `<tr>
 <td>TOTAL</td>
+<td></td>
 <td>${total} Euros</td>
 </tr>`;
 if (cartTotal) {
-    cartTotal.appendChild(trColumnaTotal);
+    cartTotal.appendChild(trColumnTotal);
 }
+
 
 // Buying function
 

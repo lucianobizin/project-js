@@ -42,9 +42,10 @@ const renderEvents = async () => {
 const eventsArray = await renderEvents();
 
 for (const prod of eventsArray) {
-    
+
     let btnComprar = document.getElementById(`btn-comprar-${prod.name.toLowerCase()}`)
     btnComprar.addEventListener('click', () => {
+        
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
                 confirmButton: 'btn btn-success',
@@ -54,36 +55,52 @@ for (const prod of eventsArray) {
         })
 
         swalWithBootstrapButtons.fire({
-            title: '¿Estás segura/o de comprar este producto?',
-            text: "Cualquier duda podés quitarlo del carrito",
+            title: `Do you want to buy ${prod.name}?`,
+            text: "Please, let me know should you need some help with that",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sí, estoy segura/o!',
-            cancelButtonText: 'Cancelar la selección!',
+            confirmButtonText: 'Yes, I do!',
+            cancelButtonText: 'Cancell!',
             reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
-                swalWithBootstrapButtons.fire(
-                    'Se ha sumado el producto al carrito!'
-                )
+                if (prod.ticketsAvailable >= 1) {
 
-                const cartProductSearch = cart.find ((prodCart) => prodCart.id === prod.id)
-                if (cartProductSearch){
-                    prod.quantity++
+                    swalWithBootstrapButtons.fire(
+                        `${prod.name} has been added to your chart`
+                    )
+
+                    const cartProductSearch = cart.find((prodCart) => prodCart.id === prod.id)
+
+
+                    if (cartProductSearch) {
+                        prod.quantity++;
+                        prod.ticketsAvailable--;
+                    } else {
+                        cart.push(prod);
+                        prod.quantity = 1;
+                        prod.ticketsAvailable--;
+                    }
+
+                    const enJSON = JSON.stringify(prod);
+                    localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
                 } else {
-                    cart.push(prod);
-                    prod.quantity = 1;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'There are no more tickets for this event!'
+                    })
                 }
 
-                const enJSON = JSON.stringify(prod);
-                localStorage.setItem(`ProductoCarrito${prod.name}`, enJSON);
+
 
             } else if (
                 /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
-                    'Se ha cancelado la adquisición'
+                    'Your acquisition has been cancelled'
                 )
             }
         })

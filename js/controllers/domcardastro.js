@@ -58,17 +58,17 @@ for (const prod of astroArray) {
         })
 
         swalWithBootstrapButtons.fire({
-            title: '¿Estás segura/o de comprar este producto?',
-            text: "Cualquier duda podés quitarlo del carrito",
+            title: `Do you want to buy ${prod.name}?`,
+            text: "Please, let me know should you need some help with that",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Sí, estoy segura/o!',
-            cancelButtonText: 'Cancelar la selección!',
+            confirmButtonText: 'Yes, I do!',
+            cancelButtonText: 'Cancell!',
             reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
                 swalWithBootstrapButtons.fire(
-                    'Se ha sumado el producto al carrito!'
+                    `${prod.name} has been added to your chart`
                 )
 
                 const cartProductSearch = cart.find ((prodCart) => prodCart.id === prod.id)
@@ -87,7 +87,7 @@ for (const prod of astroArray) {
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
-                    'Se ha cancelado la adquisición'
+                    'Your acquisition has been cancelled'
                 )
             }
         })
@@ -98,7 +98,7 @@ for (const prod of astroArray) {
     btnInfo.addEventListener('click', () => {
         Swal.fire({
             title: 'Main information',
-            text: `ID: ${prod.id}, Nombre: ${prod.name}, Precio: ${prod.price}, Entregable: ${prod.deliverables}, Entrega (días): ${prod.deliveryTerm}`,
+            text: `ID: ${prod.id}, Name: ${prod.name}, Price: ${prod.price}, Deliverables: ${prod.deliverables}, Delivery Terms: ${prod.deliveryTerm}`,
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
