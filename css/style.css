@@ -1274,7 +1274,7 @@ footer .footer-copyright p {
 /* carrito.html */
 
 .carrito-titulo{
-    margin-left: 5px;
+    margin-left: 25px;
     margin-top: 30px;
     margin-bottom: 30px;
     font-size: 26px;
@@ -1283,5 +1283,25 @@ footer .footer-copyright p {
 
 .columnas-tabla {
     height: 30px;
+    margin-left: 25px;
 }
 
+.payment-btn{
+    width: 8%;
+    background-color: #0C182C;
+    color: rgb(255, 206, 179);
+    border: none;
+    margin-left: 25px;
+    border-radius: 10px;
+}
+
+.payment-btn:hover {
+    font-weight: bold;
+    transition: 1s;
+    border: none;
+    
+}
+
+.table-margin{
+    margin-left: 25px;
+}
